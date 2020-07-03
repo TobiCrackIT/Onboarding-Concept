@@ -25,7 +25,25 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+ext.versionMajor = 1
+ext.versionMinor = 0
+ext.versionPatch = 1
+ext.versionClassifier = null
+ext.isSnapShot = false
+ext.minSdkVersion = 16
+
 android {
+
+    signingConfigs{
+        release{
+            keyAlias 'okey'
+            keyPassword 'busha1'
+            storeFile file('../okey')
+            storePassword 'busha1'
+        }
+    }
+
+
     compileSdkVersion 28
 
     sourceSets {
@@ -41,15 +59,24 @@ android {
         applicationId "com.example.onboarding"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode generateVersionCode()
+        versionName generateVersionName()
+        //versionCode flutterVersionCode.toInteger()
+        //versionName flutterVersionName
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
+            manifestPlaceholders = [appName : "Onboarding"]
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+        }
+
+        debug{
+            applicationIdSuffix ".debug"
+            debuggable true
+            versionNameSuffix '-DEBUG'
+            manifestPlaceholders = [appName : "Onboarding Debug"]
         }
     }
 }
@@ -60,4 +87,25 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+private Integer generateVersionCode() {
+    return ext.minSdkVersion * 10000000 + ext.versionMajor * 10000 +
+            ext.versionMinor * 100 + ext.versionPatch
+}
+
+private String generateVersionName() {
+    String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
+
+    if (ext.versionClassifier == null) {
+        if (ext.isSnapShot) {
+            ext.versionClassifier = "SNAPSHOT"
+        }
+    }
+
+    if (ext.versionClassifier != null) {
+        versionName += "-" + ext.versionClassifer
+    }
+
+    return versionName
 }

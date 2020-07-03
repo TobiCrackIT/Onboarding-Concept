@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding/constants.dart';
 import 'package:onboarding/screens/login/widgets/fade_slide_transition.dart';
+import 'package:onboarding/utils/config.dart';
 import 'package:onboarding/widgets/logo.dart';
 
 class Header extends StatelessWidget {
 
   final Animation<double> animation;
   Header({this.animation}):assert(animation!=null);
+
+  final Config _config=Config();
 
 
   @override
@@ -22,7 +25,8 @@ class Header extends StatelessWidget {
             animation: animation,
             additionalOffset: 0.0,
             child: Text(
-              'Welcome to Busby',
+              //'Welcome to Busby',
+              _config.appTitle,
               style: Theme.of(context)
                   .textTheme
                   .headline5
@@ -34,7 +38,8 @@ class Header extends StatelessWidget {
             animation: animation,
             additionalOffset: 16.0,
             child: Text(
-              'The goto place for everything involving education, work and community.',
+              //'The goto place for everything involving education, work and community.',
+              _config.appSubtitle,
               style: Theme.of(context)
                   .textTheme
                   .subtitle1

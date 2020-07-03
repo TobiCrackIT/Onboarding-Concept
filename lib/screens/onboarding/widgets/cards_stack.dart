@@ -38,8 +38,8 @@ class CardsStack extends StatelessWidget {
               height: darkCardHeight,
               width: darkCardWidth,
               padding: EdgeInsets.only(
-                top: !isOddPageNumber?100.0:0,
-                bottom: isOddPageNumber?100.0:0
+                top: !isOddPageNumber?100.0:1.0,
+                bottom: isOddPageNumber?100.0:1.0
               ),
               child: Center(
                 child: darkCardChild,
