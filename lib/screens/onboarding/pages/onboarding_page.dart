@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onboarding/constants.dart';
 import 'package:onboarding/screens/onboarding/widgets/cards_stack.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -21,7 +22,10 @@ class OnboardingPage extends StatelessWidget {
       children: <Widget>[
         CardsStack(pageNumber: number, lightCardChild: lightCardChild, darkCardChild: darkCardChild),
         SizedBox(height: number%2==1?50.0:25.0,),
-        textColumn
+        AnimatedSwitcher(
+          duration: kCardAnimationDuration,
+            child: textColumn
+        )
       ],
     );
   }

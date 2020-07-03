@@ -11,7 +11,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Awesome Onboarding Style',
       debugShowCheckedModeBanner: false,
-      home:Onboarding(),
+      home:Builder(
+        builder: (BuildContext context){
+          var screenHeight = MediaQuery.of(context).size.height;
+
+          return Onboarding(
+            screenHeight: screenHeight,
+          );
+        },
+      ),
     );
   }
 }
